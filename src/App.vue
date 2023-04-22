@@ -1,30 +1,53 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div id="app">
+    <h1>Goal Time Estimator</h1>
+    <TaskInput @update-task="updateTask" />
+    <ComponentInput @update-component="updateComponent" />
+    <ResultDisplay :result="result" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<script lang="ts">
+import { defineComponent } from 'vue';
+import TaskInput from './components/TaskInput.vue';
+import ComponentInput from './components/ComponentInput.vue';
+import ResultDisplay from './components/ResultDisplay.vue';
+
+export default defineComponent({
+  components: {
+    TaskInput,
+    ComponentInput,
+    ResultDisplay,
+  },
+  data() {
+    return {
+      task: {
+        name: '',
+        goal: 0,
+      },
+      component: {
+        amount: 0,
+        frequency: 0,
+      },
+      result: {},
+    };
+  },
+  methods: {
+    updateTask(task) {
+      this.task = task;
+      this.calculateResult();
+    },
+    updateComponent(component) {
+      this.component = component;
+      this.calculateResult();
+    },
+    calculateResult() {
+      // Implement your calculation logic here
+    },
+  },
+});
+</script>
+
+<style>
+/* Add your global styles here */
 </style>
