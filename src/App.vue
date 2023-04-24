@@ -1,53 +1,31 @@
 <template>
-  <div id="app">
+  <div class="app">
     <h1>Goal Time Estimator</h1>
-    <TaskInput @update-task="updateTask" />
-    <ComponentInput @update-component="updateComponent" />
-    <ResultDisplay :result="result" />
+    <TaskInput :task="task" />
+    <ResultDisplay :task="task" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { Task } from './types';
 import TaskInput from './components/TaskInput.vue';
-import ComponentInput from './components/ComponentInput.vue';
 import ResultDisplay from './components/ResultDisplay.vue';
 
 export default defineComponent({
   components: {
     TaskInput,
-    ComponentInput,
     ResultDisplay,
   },
-  data() {
-    return {
-      task: {
-        name: '',
-        goal: 0,
-      },
-      component: {
-        amount: 0,
-        frequency: 0,
-      },
-      result: {},
-    };
-  },
-  methods: {
-    updateTask(task) {
-      this.task = task;
-      this.calculateResult();
-    },
-    updateComponent(component) {
-      this.component = component;
-      this.calculateResult();
-    },
-    calculateResult() {
-      // Implement your calculation logic here
-    },
+  setup() {
+    const task = ref<Task>({ amount: 1, frequency: 1, frequencyUnit: 'day', goal: 12 });
+    return { task };
   },
 });
 </script>
 
 <style>
-/* Add your global styles here */
+.app {
+  margin: 1em;
+}
 </style>
